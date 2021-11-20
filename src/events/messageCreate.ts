@@ -1,7 +1,6 @@
 import { Message } from 'discord.js'
 import { BotClient, BotEvent } from '../classes/index'
 
-
 export default class MessageCreateEvent extends BotEvent {
     constructor(client: BotClient) {
         super(client, {
