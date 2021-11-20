@@ -17,7 +17,25 @@ export default class MessageUpdateEvent extends BotEvent {
 
         if (message.author?.bot || message.webhookId || !bot.permissionsIn(channel).has('MANAGE_MESSAGES')) return
 
+        const guild = await this.client.database.guild.findFirst({ where: { id: channel.guild.id } })
+
         let isMalicious = false
+        let isWhiteListed = false
+
+        if (guild) {
+            const links = message.content.match(
+                /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/
+            )
+
+            const whitelist = guild.domain_whitelist
+
+            // check if all links are in the whitelist
+            if (links.every((v) => whitelist.includes(v))) {
+                isWhiteListed = true
+            }
+        }
+
+        if (isWhiteListed) return
 
         const { data } = (await axios.post(
             'https://anti-fish.bitflow.dev/check',

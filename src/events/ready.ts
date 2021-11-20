@@ -20,29 +20,8 @@ export default class ReadyEvent extends BotEvent {
         // const guild = await this.client.guilds.fetch(testingGuild)
         // await guild.commands.set(ownerCommands)
 
-        try {
-            await this.client.database.$connect()
-            this.client.logger.info('Connected to database')
-
-            const guild = await this.client.database.guild.upsert({
-                where: {
-                    id: testingGuild
-                },
-                create: {
-                    id: testingGuild,
-                    link_whitelist: []
-                },
-                update: {
-                    id: testingGuild,
-                    link_whitelist: []
-                }
-            })
-
-            this.client.logger.info(`Created guild with id ${guild.id}`)
-        } catch (error) {
-            this.client.logger.error(error)
-            process.exit(1)
-        }
+        await this.client.database.$connect()
+        this.client.logger.info('Connected to database')
 
         if (!process.env.TOPGG_TOKEN) return this.client.logger.info(`${bold(this.client.user.username)} is ready!`)
 
