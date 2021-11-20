@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { Message } from 'discord.js'
 import { BotClient, BotEvent } from '../classes/index'
 
@@ -9,8 +10,32 @@ export default class MessageCreateEvent extends BotEvent {
     }
 
     async execute(message: Message) {
-        if (message.channel.type !== 'GUILD_TEXT' || message.author?.bot || message.webhookId) return
+        if (message.author?.bot || message.webhookId) return
 
-        // TODO: Check message for malicious links and other stuff
+        let isMalicious = false
+
+        const { data } = (await axios.post(
+            'https://anti-fish.bitflow.dev/check',
+            {
+                message: message.content
+            },
+            {
+                headers: {
+                    'User-Agent': 'Inspector (https://github.com/link-discord/inspector)'
+                }
+            }
+        )) as any
+
+        data.matches.forEach((match: { type: string }) => {
+            const type = match.type.toLowerCase()
+
+            if ((type === 'phishing' || type === 'ip_logger') && !isMalicious) {
+                isMalicious = true
+            }
+        })
+
+        if (isMalicious) {
+            message.delete()
+        }
     }
 }
