@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message } from 'discord.js'
+import { GuildTextBasedChannel, Message } from 'discord.js'
 import { BotClient, BotEvent } from '../classes/index'
 
 export default class MessageCreateEvent extends BotEvent {
@@ -10,7 +10,10 @@ export default class MessageCreateEvent extends BotEvent {
     }
 
     async execute(message: Message) {
-        if (message.author?.bot || message.webhookId) return
+        const channel = message.channel as GuildTextBasedChannel
+        const bot = await message.guild.members.fetch(this.client.user.id)
+
+        if (message.author?.bot || message.webhookId || !bot.permissionsIn(channel).has('MANAGE_MESSAGES')) return
 
         let isMalicious = false
 
