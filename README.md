@@ -1,2 +1,3 @@
 # inspector
- The inspector discord bot
+
+The inspector discord bot

@@ -26,16 +26,16 @@ export default class ReadyEvent extends BotEvent {
 
             const guild = await this.client.database.guild.upsert({
                 where: {
-                    id: testingGuild,
+                    id: testingGuild
                 },
                 create: {
                     id: testingGuild,
-                    link_whitelist: [],
+                    link_whitelist: []
                 },
                 update: {
                     id: testingGuild,
-                    link_whitelist: [],
-                },
+                    link_whitelist: []
+                }
             })
 
             this.client.logger.info(`Created guild with id ${guild.id}`)

@@ -38,15 +38,19 @@ export default class InteractionEvent extends BotEvent {
                     const permissions = formatPermissions(missingPermissions)
 
                     return await interaction.reply({
-                        embeds: [{
-                            title: 'Missing Permissions',
-                            color: 'BLURPLE',
-                            description: `I need the permissions below to execute this`,
-                            fields: [{
-                                name: 'Permissions',
-                                value: '```\n' + permissions.join(', ') + '\n```'
-                            }]
-                        }]
+                        embeds: [
+                            {
+                                title: 'Missing Permissions',
+                                color: 'BLURPLE',
+                                description: `I need the permissions below to execute this`,
+                                fields: [
+                                    {
+                                        name: 'Permissions',
+                                        value: '```\n' + permissions.join(', ') + '\n```'
+                                    }
+                                ]
+                            }
+                        ]
                     })
                 }
             }
@@ -61,15 +65,19 @@ export default class InteractionEvent extends BotEvent {
                     const permissions = formatPermissions(missingPermissions)
 
                     return await interaction.reply({
-                        embeds: [{
-                            title: 'Missing Permissions',
-                            color: 'BLURPLE',
-                            description: `You need the permissions below to execute this`,
-                            fields: [{
-                                name: 'Permissions',
-                                value: '```\n' + permissions.join(', ') + '\n```'
-                            }]
-                        }]
+                        embeds: [
+                            {
+                                title: 'Missing Permissions',
+                                color: 'BLURPLE',
+                                description: `You need the permissions below to execute this`,
+                                fields: [
+                                    {
+                                        name: 'Permissions',
+                                        value: '```\n' + permissions.join(', ') + '\n```'
+                                    }
+                                ]
+                            }
+                        ]
                     })
                 }
             }
