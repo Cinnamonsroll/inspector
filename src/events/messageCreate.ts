@@ -23,14 +23,14 @@ export default class MessageCreateEvent extends BotEvent {
         let isWhiteListed: boolean = false
 
         if (guild != undefined) {
-            const links = message.content.match(
+            const domains = message.content.match(
                 /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/
             )
 
             const whitelist: string[] = guild.domain_whitelist
 
             // check if all links are in the whitelist
-            if (links.every((v: string): boolean => whitelist.includes(v))) isWhiteListed = true
+            if (domains.every((v: string): boolean => whitelist.includes(v))) isWhiteListed = true
         }
 
         if (isWhiteListed) return

@@ -1,11 +1,12 @@
 import { Guild } from '.prisma/client'
 import { CommandInteraction, Permissions, Formatters } from 'discord.js'
-import { URL } from 'url'
 import { BotClient, BotCommand } from '../classes/index'
 
 const { codeBlock } = Formatters
 
 export default class PingCommand extends BotCommand {
+    private regex = /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/
+
     constructor(client: BotClient) {
         super(client, {
             name: 'whitelist',
@@ -13,17 +14,17 @@ export default class PingCommand extends BotCommand {
             options: [
                 {
                     name: 'all',
-                    description: 'Allows you to see all whitelisted links.',
+                    description: 'Allows you to see all whitelisted domains.',
                     type: 'SUB_COMMAND'
                 },
                 {
                     name: 'add',
-                    description: 'Adds a link to the whitelist.',
+                    description: 'Adds a domain to the whitelist.',
                     type: 'SUB_COMMAND',
                     options: [
                         {
                             name: 'link',
-                            description: 'The link to add.',
+                            description: 'The domain to add.',
                             required: true,
                             type: 'STRING'
                         }
@@ -31,12 +32,12 @@ export default class PingCommand extends BotCommand {
                 },
                 {
                     name: 'remove',
-                    description: 'Removes a link from the whitelist.',
+                    description: 'Removes a domain from the whitelist.',
                     type: 'SUB_COMMAND',
                     options: [
                         {
                             name: 'link',
-                            description: 'The link to remove.',
+                            description: 'The domain to remove.',
                             required: true,
                             type: 'STRING'
                         }
@@ -54,13 +55,9 @@ export default class PingCommand extends BotCommand {
         let guild: Guild = null
 
         const subcommand = interaction.options.getSubcommand()
-        const link = interaction.options.getString('link')
+        const input = interaction.options.getString('link')
 
-        try {
-            if (link) new URL(link)
-        } catch (e) {
-            return interaction.reply('Invalid link.')
-        }
+        if (input && !this.regex.test(input)) return await interaction.reply('Invalid link(s).')
 
         try {
             guild = await this.client.database.guild.findFirst({
@@ -79,15 +76,15 @@ export default class PingCommand extends BotCommand {
         } finally {
             if (!guild) return interaction.reply('Could not retrieve this guild from the database.')
 
-            const links = guild.domain_whitelist
+            const whitelist = guild.domain_whitelist
 
             if (subcommand === 'all') {
-                if (links.length === 0) return interaction.reply('This guild has no whitelisted links.')
-                else return interaction.reply(`Whitelisted domains: ${codeBlock(links.join(', '))}`)
+                if (whitelist.length === 0) return interaction.reply('This guild has no whitelisted domains.')
+                else return interaction.reply(`Whitelisted domains: ${codeBlock(whitelist.join(', '))}`)
             } else if (subcommand === 'add') {
-                const url = new URL(link)
+                const domains = this.regex.exec(input)
 
-                links.push(url.hostname)
+                whitelist.concat(domains)
 
                 await this.client.database.guild.update({
                     where: {
@@ -95,19 +92,28 @@ export default class PingCommand extends BotCommand {
                     },
                     data: {
                         domain_whitelist: {
-                            set: links
+                            set: whitelist
                         }
                     }
                 })
 
                 await interaction.reply(`The link has been added to the whitelist.`)
             } else if (subcommand === 'remove') {
-                const url = new URL(link)
-                const index = links.indexOf(url.hostname)
+                const domains = this.regex.exec(input)
 
-                if (index === -1) return interaction.reply('This link is not whitelisted.')
+                const invalidDomains: string[] = []
 
-                links.splice(index, 1)
+                for (const domain of domains) {
+                    const index = whitelist.indexOf(domain)
+
+                    if (index === -1) invalidDomains.push(domain)
+
+                    whitelist.splice(index, 1)
+                }
+
+                if (invalidDomains.length > 0) {
+                    return await interaction.reply(`The following domains are not whitelisted: ${codeBlock(invalidDomains.join(', '))}`)
+                }
 
                 await this.client.database.guild.update({
                     where: {
@@ -115,7 +121,7 @@ export default class PingCommand extends BotCommand {
                     },
                     data: {
                         domain_whitelist: {
-                            set: links
+                            set: whitelist
                         }
                     }
                 })
