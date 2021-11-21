@@ -15,9 +15,9 @@ PATH=$(pwd)/node_modules/node/bin:$PATH
 
 export PATH
 
-echo "Installing packages..."
-
 # Install packages (Comment out the commands below if you have all packages already installed)
+
+echo "Installing packages..."
 
 if npm ci;
 then
