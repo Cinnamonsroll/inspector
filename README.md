@@ -127,13 +127,13 @@ For replit you don't need to make a `.env` file, because you can just use the se
 
 If you followed the step to get a supabase postgresql server, you should use that connection string in the `DATABSE_URL` variable.
 
-After you added the `.env` file and filled out all values, make sure to run this command to configure the database.
+After you added the `.env` file (or added all the secrets in replit) and filled out all values, make sure to run this command to configure the database.
 
 ```
 npx prisma migrate dev
 ```
 
-Make sure to run that command each time you change something in the `prisma/schema.prisma` file.
+Make sure to run that command before you start the bot for the first time.
 
 ### Running
 
