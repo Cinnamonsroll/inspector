@@ -8,7 +8,7 @@ The inspector discord bot
 
 ### Installation
 
-Make sure you have [node v16] installed and the latest version of npm. (npm comes with node if you install node)
+Make sure you have the latest version of [node](https://nodejs.org) installed and the latest version of npm. (npm comes with node if you install node)
 
 Then clone this github repo.
 
