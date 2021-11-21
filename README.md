@@ -13,18 +13,20 @@ Inspector is an Auto Moderation Bot designed to be simple to use and to be effec
 
 You can also whitelist any links by using the whitelist command
 
-/whitelist all - View all whitelisted domains   
-/whitelist add - Add a link to the whitelist    
-/whitelist remove - Remove a link from the whitelist  
+/whitelist all - View all whitelisted domains  
+/whitelist add - Add a link to the whitelist  
+/whitelist remove - Remove a link from the whitelist
 
-Required Bot Permissions:   
-- Send Messages  
-- Manage Messages  
-- Embed Links  
+Required Bot Permissions:
 
-Optional Bot Permissions:   
-- Kick Members   
-- Ban Members  
+-   Send Messages
+-   Manage Messages
+-   Embed Links
+
+Optional Bot Permissions:
+
+-   Kick Members
+-   Ban Members
 
 The Permissions listed as optional may give you extra features but are not required for the core functionality of the bot.
 
