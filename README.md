@@ -2,6 +2,7 @@
 
 [![DeepScan grade](https://deepscan.io/api/teams/16052/projects/19282/branches/495454/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=16052&pid=19282&bid=495454)
 [![Prettier](https://github.com/link-discord/inspector/actions/workflows/prettier.yml/badge.svg)](https://github.com/link-discord/inspector/actions/workflows/prettier.yml)
+[![Run on Repl.it](https://repl.it/badge/github/link-discord/inspector)](https://repl.it/badge/github/link-discord/inspector)
 
 The inspector discord bot
 
@@ -134,16 +135,14 @@ Make sure to run that command each time you change something in the `prisma/sche
 
 ### Running
 
-To run the bot just use the these commands (in correct order). If you followd all the steps above the bot should be running successfully.
+To run the bot just use the these commands (in correct order). If you followed all the steps above the bot should be running successfully.
 
 ```
 npm run build
 npm run start
 ```
 
-## Replit
-
-[![Run on Repl.it](https://repl.it/badge/github/link-discord/inspector)](https://repl.it/badge/github/link-discord/inspector)
+On replit, just click the run button.
 
 # License
 
