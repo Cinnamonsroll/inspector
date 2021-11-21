@@ -19,9 +19,7 @@ echo "Installing packages..."
 
 # Install packages (Comment out the commands below if you have all packages already installed)
 
-npm ci
-
-if [ $? -eq 0 ]
+if npm ci;
 then
     clear
 else
