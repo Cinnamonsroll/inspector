@@ -4,7 +4,7 @@ import { BotClient, BotCommand } from '../classes/index'
 
 const { codeBlock } = Formatters
 
-export default class PingCommand extends BotCommand {
+export default class WhitelistCommand extends BotCommand {
     private regex = /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/
 
     constructor(client: BotClient) {
