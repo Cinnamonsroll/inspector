@@ -9,6 +9,34 @@ The inspector discord bot
 
 ## How to use the bot for yourself
 
+## Disclaimer
+
+If you happen to clone the bot and make it available publicly, please credit me in the description of the bot using the text below.
+
+#### Markdown
+
+```md
+This bot is a fork of [inspector](https://github.com/link-discord/inspector) and was made originally by [Link](https://github.com/link-discord)
+
+Copyright © 2021 Link
+```
+
+#### HTML
+
+```html
+This bot is a fork of <a href="https://github.com/link-discord/inspector">Inspector</a> and was made originally by
+<a href="https://github.com/link-discord">Link</a>
+
+Copyright © 2021 Link
+```
+
+#### Plain Text
+```
+This bot is a fork of Inspector (https://github.com/link-discord/inspector) and was made originally by Link (https://github.com/link-discord)
+
+Copyright © 2021 Link
+```
+
 ### Installation
 
 #### Locally
@@ -87,27 +115,6 @@ To run the bot just use the these commands (in correct order). If you followd al
 ```
 npm run build
 npm run start
-```
-
-## Disclaimer
-
-If you happen to clone the bot and submit it to a discord bot list such as top.gg, please credit me in the description of the bot using the text below.
-
-#### Markdown
-
-```md
-This bot is a fork of [inspector](https://github.com/link-discord/inspector) and was made originally by [Link](https://github.com/link-discord)
-
-Copyright © 2021 Link
-```
-
-#### HTML
-
-```html
-This bot is a fork of <a href="https://github.com/link-discord/inspector">Inspector</a> and was made originally by
-<a href="https://github.com/link-discord">Link</a>
-
-Copyright © 2021 Link
 ```
 
 ## License
