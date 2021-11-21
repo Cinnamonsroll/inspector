@@ -35,7 +35,7 @@ Your [connection string](https://www.postgresql.org/docs/current/libpq-connect.h
 postgresql://[USERNAME]:[PASSWORD]@[HOST]:[PORT]/[DATABASE_NAME]
 ```
 
-Make sure to replace the placeholders with their respective values. 
+Make sure to replace the placeholders with their respective values.
 
 #### Supabase
 
