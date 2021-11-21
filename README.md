@@ -104,7 +104,8 @@ Copyright © 2021 Link
 #### HTML
 
 ```html
-This bot is a fork of <a href="https://github.com/link-discord/inspector">Inspector</a> and was made originally by <a href="https://github.com/link-discord">Link</a>
+This bot is a fork of <a href="https://github.com/link-discord/inspector">Inspector</a> and was made originally by
+<a href="https://github.com/link-discord">Link</a>
 
 Copyright © 2021 Link
 ```
