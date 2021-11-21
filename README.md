@@ -11,11 +11,11 @@ The inspector discord bot
 
 Inspector is an Auto Moderation Bot designed to be simple to use and to be effective at preventing malicious content from being sent to your Server. It protects you from Phishing Links and IP Loggers and automatically punishes users who send such messages.
 
-You can also whitelist any links by using the whitelist command
+You can also whitelist any domains by using the whitelist command
 
 /whitelist all - View all whitelisted domains  
-/whitelist add - Add a link to the whitelist  
-/whitelist remove - Remove a link from the whitelist
+/whitelist add - Add a domain to the whitelist  
+/whitelist remove - Remove a domain from the whitelist
 
 Required Bot Permissions:
 
