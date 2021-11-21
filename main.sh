@@ -1,5 +1,7 @@
 #!/user/bin/bash
 
+# Only use this script for replit
+
 if "$(node -v)" =~ "16."
 then
     echo "Using latest nodejs version"
