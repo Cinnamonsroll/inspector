@@ -7,6 +7,27 @@ The inspector discord bot
 
 <img width="256" height="auto" src="https://user-images.githubusercontent.com/50463727/142759162-88e276a9-b4e1-4254-85c1-d42f6d89210e.png"></img>
 
+## Description
+
+Inspector is an Auto Moderation Bot designed to be simple to use and to be effective at preventing malicious content from being sent to your Server. It protects you from Phishing Links and IP Loggers and automatically punishes users who send such messages.
+
+You can also whitelist any links by using the whitelist command
+
+/whitelist all - View all whitelisted domains   
+/whitelist add - Add a link to the whitelist    
+/whitelist remove - Remove a link from the whitelist  
+
+Required Bot Permissions:   
+- Send Messages  
+- Manage Messages  
+- Embed Links  
+
+Optional Bot Permissions:   
+- Kick Members   
+- Ban Members  
+
+The Permissions listed as optional may give you extra features but are not required for the core functionality of the bot.
+
 ## How to use the bot for yourself
 
 ### Disclaimer
