@@ -1,5 +1,5 @@
 {
-  "name": "anti-nsfw-v13",
+  "name": "inspector",
   "version": "1.0.0",
   "description": "The inspector discord bot",
   "main": "index.js",
