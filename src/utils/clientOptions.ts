@@ -9,8 +9,8 @@ const clientOptions: ClientOptions = {
         status: 'online',
         activities: [
             {
-                name: 'Inspecting messages...',
-                type: 'PLAYING'
+                name: 'you... 🔍',
+                type: 'WATCHING'
             }
         ]
     },
