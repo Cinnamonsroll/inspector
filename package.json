@@ -9,7 +9,7 @@
     "test": "npm run build && npm run start"
   },
   "keywords": [],
-  "author": "",
+  "author": "Link#0069 https://github.com/link-discord",
   "license": "GNU GPL v3",
   "dependencies": {
     "@prisma/client": "^3.5.0",
