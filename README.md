@@ -9,7 +9,7 @@ The inspector discord bot
 
 ## How to use the bot for yourself
 
-## Disclaimer
+### Disclaimer
 
 If you happen to clone the bot and make it available publicly, please credit me in the description of the bot using the text below.
 
