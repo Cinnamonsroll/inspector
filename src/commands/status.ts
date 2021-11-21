@@ -6,7 +6,7 @@ export default class StatusCommand extends BotCommand {
     constructor(client: BotClient) {
         super(client, {
             name: 'status',
-            description: 'Returns the ping of the bot.'
+            description: 'Returns the status of the bot and its services.'
         })
     }
 
