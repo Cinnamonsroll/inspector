@@ -143,7 +143,7 @@ npm run start
 
 ## Replit
 
-<iframe frameborder="0" width="100%" height="500px" src="https://replit.com/@InspectorBot/inspector?embed=true"></iframe>
+[![Run on Repl.it](https://repl.it/badge/github/link-discord/inspector)](https://repl.it/badge/github/link-discord/inspector)
 
 # License
 
