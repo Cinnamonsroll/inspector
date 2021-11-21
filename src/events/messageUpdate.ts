@@ -19,42 +19,49 @@ export default class MessageUpdateEvent extends BotEvent {
         if (message.author?.bot || message.webhookId != undefined || !bot.permissionsIn(channel).has('MANAGE_MESSAGES'))
             return
 
-        const guild = await this.client.database.guild.findFirst({ where: { id: channel.guild.id } })
+        const whitelist = await this.client.database.whitelistedDomain.findMany({
+            where: { guild: { id: message.guildId } }
+        })
 
         let isMalicious: boolean = false
         let isWhiteListed: boolean = false
 
-        if (guild != undefined) {
+        if (whitelist !== undefined && whitelist.length > 0) {
             const domains = message.content.match(
                 /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/
             )
 
-            const whitelist: string[] = guild.domain_whitelist
+            const whitelistedDomains: string[] = whitelist.map((d) => d.domain)
 
             // check if all links are in the whitelist
-            if (domains.every((v: string): boolean => whitelist.includes(v))) isWhiteListed = true
+            if (domains.every((v: string): boolean => whitelistedDomains.includes(v))) isWhiteListed = true
         }
 
         if (isWhiteListed) return
 
-        const { data } = (await axios.post(
-            'https://anti-fish.bitflow.dev/check',
-            {
-                message: message.content
-            },
-            {
-                headers: {
-                    'User-Agent': 'Inspector (https://github.com/link-discord/inspector)'
+        try {
+            const { data } = (await axios.post(
+                'https://anti-fish.bitflow.dev/check',
+                {
+                    message: message.content
+                },
+                {
+                    headers: {
+                        'User-Agent': 'Inspector (https://github.com/link-discord/inspector)'
+                    }
                 }
-            }
-        )) as any
+            )) as any
 
-        data.matches.forEach((match: { type: string }): void => {
-            const type: string = match.type.toLowerCase()
+            data.matches.forEach((match: { type: string }): void => {
+                const type: string = match.type.toLowerCase()
 
-            if ((type === 'phishing' || type === 'ip_logger') && !isMalicious) isMalicious = true
-        })
+                if ((type === 'phishing' || type === 'ip_logger') && !isMalicious) isMalicious = true
+            })
 
-        if (isMalicious) await message.delete()
+            if (isMalicious) await message.delete()
+        } catch (error) {
+            // @ts-ignore unknown type
+            if (!error.isAxiosError) this.client.logger.error(e)
+        }
     }
 }

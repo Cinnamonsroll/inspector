@@ -1,4 +1,4 @@
-import { Guild } from '.prisma/client'
+import { WhitelistedDomain } from '.prisma/client'
 import { CommandInteraction, Permissions, Formatters } from 'discord.js'
 import { BotClient, BotCommand } from '../classes/index'
 
@@ -52,7 +52,7 @@ export default class WhitelistCommand extends BotCommand {
     }
 
     async execute(interaction: CommandInteraction) {
-        let guild: Guild = null
+        let whitelist: WhitelistedDomain[] = []
 
         const subcommand = interaction.options.getSubcommand()
         const input = interaction.options.getString('link')
@@ -60,55 +60,85 @@ export default class WhitelistCommand extends BotCommand {
         if (input && !this.regex.test(input)) return await interaction.reply('Invalid link(s).')
 
         try {
-            guild = await this.client.database.guild.findFirst({
+            whitelist = await this.client.database.whitelistedDomain.findMany({
+                where: {
+                    guild: {
+                        id: interaction.guildId
+                    }
+                }
+            })
+
+            await this.client.database.guild.findFirst({
                 rejectOnNotFound: true,
                 where: {
                     id: interaction.guildId
                 }
             })
         } catch (error) {
-            guild = await this.client.database.guild.create({
+            await this.client.database.guild.create({
                 data: {
-                    id: interaction.guildId,
-                    domain_whitelist: []
+                    id: interaction.guildId
                 }
             })
         } finally {
-            if (!guild) return interaction.reply('Could not retrieve this guild from the database.')
-
-            const whitelist = guild.domain_whitelist
-
             if (subcommand === 'all') {
+                const domains = codeBlock(whitelist.map((d) => d.domain).join(', '))
+                
                 if (whitelist.length === 0) return interaction.reply('This guild has no whitelisted domains.')
-                else return interaction.reply(`Whitelisted domains: ${codeBlock(whitelist.join(', '))}`)
+                else return interaction.reply(`Whitelisted domains: ${domains}`)
             } else if (subcommand === 'add') {
-                const domains = this.regex.exec(input)
-
-                whitelist.concat(domains)
-
-                await this.client.database.guild.update({
-                    where: {
-                        id: interaction.guildId
-                    },
-                    data: {
-                        domain_whitelist: {
-                            set: whitelist
-                        }
-                    }
-                })
-
-                await interaction.reply(`The link has been added to the whitelist.`)
-            } else if (subcommand === 'remove') {
-                const domains = this.regex.exec(input)
-
                 const invalidDomains: string[] = []
+                const domains = this.regex.exec(input)
 
                 for (const domain of domains) {
-                    const index = whitelist.indexOf(domain)
+                    const domainExists = whitelist.find((d) => d.domain === domain)
 
-                    if (index === -1) invalidDomains.push(domain)
+                    if (domainExists) invalidDomains.push(domain)
 
-                    whitelist.splice(index, 1)
+                    await this.client.database.whitelistedDomain.create({
+                        data: {
+                            domain: domain,
+                            guild: {
+                                connect: {
+                                    id: interaction.guildId
+                                }
+                            }
+                        }
+                    })
+                }
+
+                if (invalidDomains.length > 0) {
+                    return await interaction.reply(
+                        `The following domains are already whitelisted: ${codeBlock(invalidDomains.join(', '))}`
+                    )
+                }
+
+                await interaction.reply(`The domain(s) have been added to the whitelist.`)
+            } else if (subcommand === 'remove') {
+                const invalidDomains: string[] = []
+                const domains = this.regex.exec(input)
+
+                for (const domain of domains) {
+                    try {
+                        const { id } = await this.client.database.whitelistedDomain.findFirst({
+                            rejectOnNotFound: true,
+                            where: {
+                                domain: domain,
+                                guild: {
+                                    id: interaction.guildId
+                                }
+                            }
+                        })
+
+                        await this.client.database.whitelistedDomain.delete({
+                            where: {
+                                id
+                            }
+                        })
+                    } catch (error) {
+                        invalidDomains.push(domain)
+                        continue
+                    }
                 }
 
                 if (invalidDomains.length > 0) {
@@ -117,18 +147,7 @@ export default class WhitelistCommand extends BotCommand {
                     )
                 }
 
-                await this.client.database.guild.update({
-                    where: {
-                        id: interaction.guildId
-                    },
-                    data: {
-                        domain_whitelist: {
-                            set: whitelist
-                        }
-                    }
-                })
-
-                await interaction.reply(`The link has been removed from the whitelist.`)
+                await interaction.reply(`The domain(s) have been removed from the whitelist.`)
             }
         }
     }

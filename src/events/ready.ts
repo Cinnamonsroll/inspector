@@ -21,9 +21,6 @@ export default class ReadyEvent extends BotEvent {
         const guild = await this.client.guilds.fetch(testingGuild)
         await guild.commands.set(ownerCommands)
 
-        await this.client.database.$connect()
-        this.client.logger.info('Connected to database')
-
         if (!('TOPGG_TOKEN' in process.env))
             return this.client.logger.info(`${bold(this.client.user.username)} is ready!`)
 

@@ -8,6 +8,13 @@ datasource db {
 }
 
 model Guild {
-  id               String   @id @db.VarChar(255)
-  domain_whitelist String[]
+  id              String            @id @db.VarChar(255)
+  domainWhitelist WhitelistedDomain[]
+}
+
+model WhitelistedDomain {
+  id      Int    @id @default(autoincrement())
+  domain  String @db.VarChar(255)
+  guild   Guild  @relation(fields: [guildID], references: [id])
+  guildID String @db.VarChar(255)
 }
