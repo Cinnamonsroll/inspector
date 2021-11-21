@@ -7,7 +7,7 @@ The inspector discord bot
 
 <img width="256" height="auto" src="https://user-images.githubusercontent.com/50463727/142759162-88e276a9-b4e1-4254-85c1-d42f6d89210e.png"></img>
 
-## How to get started
+## How to use the bot for yourself
 
 ### Installation
 
@@ -87,6 +87,26 @@ To run the bot just use the these commands (in correct order). If you followd al
 ```
 npm run build
 npm run start
+```
+
+## Disclaimer
+
+If you happen to clone the bot and submit it to a discord bot list such as top.gg, please credit me in the description of the bot using the text below.
+
+#### Markdown
+
+```md
+This bot is a fork of [inspector](https://github.com/link-discord/inspector) and was made originally by [Link](https://github.com/link-discord)
+
+Copyright © 2021 Link
+```
+
+#### HTML
+
+```html
+This bot is a fork of <a href="https://github.com/link-discord/inspector">Inspector</a> and was made originally by <a href="https://github.com/link-discord">Link</a>
+
+Copyright © 2021 Link
 ```
 
 ## License
