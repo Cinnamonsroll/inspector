@@ -11,7 +11,7 @@ const piston = new PistonClient()
 // We do a little trolling and make this a public eval command lol
 
 export default class EvalCommand extends BotCommand {
-    private regex: RegExp = /```(.*)\n([\s\S]*?)\n```/
+    private regex: RegExp = /```(.*)\n([\s\S]*?)\n?```/
 
     constructor(client: BotClient) {
         super(client, {
