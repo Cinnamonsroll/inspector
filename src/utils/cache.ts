@@ -1,6 +1,9 @@
 const cacheMap = new Map()
 
-export async function cache(func: Function): Promise<any> {
+// Function type
+type func = (() => Promise<any> | any) | ((...args: any[]) => Promise<any> | any)
+
+export async function cache(func: func): Promise<any> {
     const key: string = func.toString()
 
     if (cacheMap.has(key)) return cacheMap.get(key)

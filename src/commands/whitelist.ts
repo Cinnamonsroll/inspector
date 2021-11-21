@@ -80,7 +80,7 @@ export default class WhitelistCommand extends BotCommand {
                     id: interaction.guildId
                 }
             })
-        } finally {
+
             if (subcommand === 'all') {
                 const domains = codeBlock(whitelist.map((d) => d.domain).join(', '))
 

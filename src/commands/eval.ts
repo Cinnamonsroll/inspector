@@ -11,7 +11,7 @@ const piston = new PistonClient()
 // We do a little trolling and make this a public eval command lol
 
 export default class EvalCommand extends BotCommand {
-    private regex: RegExp = /```(.*)\n([\s\S]*?)\n```/
+    private regex = /```(.*)\n([\s\S]*?)\n```/
 
     constructor(client: BotClient) {
         super(client, {
@@ -56,7 +56,7 @@ export default class EvalCommand extends BotCommand {
         const { code, language } = this.getCode(interaction.options.getString('code', true))
 
         try {
-            let output = await this.executeCode(code, {
+            const output = await this.executeCode(code, {
                 useEval: interaction.user.id === this.client.ownerID,
                 language
             })
@@ -74,8 +74,8 @@ export default class EvalCommand extends BotCommand {
 
             await interaction.followUp({ embeds: [embed] })
         } catch (error) {
-            // @ts-ignore
-            const output: string = `${error.name}: ${error.message}`
+            // @ts-ignore unknown type
+            const output = `${error.name}: ${error.message}`
 
             await interaction.followUp({
                 embeds: [

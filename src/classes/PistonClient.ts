@@ -8,6 +8,7 @@ interface Runtime {
 }
 
 export class PistonClient {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     constructor() {}
 
     async getRuntimes(): Promise<Runtime[]> {
@@ -40,8 +41,7 @@ export class PistonClient {
             return data.compile != undefined
                 ? { console: data.run.output, compiler: data.compile.output }
                 : { console: data.run.output }
-        } catch (error) {
-            // @ts-ignore
+        } catch (error: any) {
             if (error.isAxiosError) return { console: error.response.data.message, error: true }
         }
     }
