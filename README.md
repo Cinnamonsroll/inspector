@@ -54,10 +54,9 @@ If you followed the step to get a supabase postgresql server, you should use tha
 
 ### Running
 
-First run this command to compile your code.
+To run the bot just use the these commands (in correct order). If you followd all the steps above the bot should be running succesfully.
 
 ```
 npm run build
+npm run start
 ```
-
-Then to run the bot just use the `npm run start` command. If you followd all the steps above the bot should be running succesfully.
