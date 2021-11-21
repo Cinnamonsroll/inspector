@@ -123,6 +123,8 @@ DISCORD_TOKEN="Your discord bot token here"
 DATABASE_URL="URL to your postgresql server"
 ```
 
+For replit you don't need to make a `.env` file, because you can just use the secrets panel on the left.
+
 If you followed the step to get a supabase postgresql server, you should use that connection string in the `DATABSE_URL` variable.
 
 After you added the `.env` file and filled out all values, make sure to run this command to configure the database.
