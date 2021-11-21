@@ -43,8 +43,8 @@ export default class EvalCommand extends BotCommand {
         options: { useEval: boolean; language: string }
     ): Promise<{ console: string; compiler?: string; error?: boolean }> {
         if (options.useEval) {
-          if (options.language === 'js') return { console: eval(code) }
-          else if (options.language === 'ts') return { console: eval(transpile(code)) }
+            if (options.language === 'js') return { console: eval(code) }
+            else if (options.language === 'ts') return { console: eval(transpile(code)) }
         }
 
         return await piston.execute(code, options.language)

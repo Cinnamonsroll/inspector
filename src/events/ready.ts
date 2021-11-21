@@ -24,7 +24,8 @@ export default class ReadyEvent extends BotEvent {
         await this.client.database.$connect()
         this.client.logger.info('Connected to database')
 
-        if (!('TOPGG_TOKEN' in process.env)) return this.client.logger.info(`${bold(this.client.user.username)} is ready!`)
+        if (!('TOPGG_TOKEN' in process.env))
+            return this.client.logger.info(`${bold(this.client.user.username)} is ready!`)
 
         const poster = AutoPoster(process.env.TOPGG_TOKEN, this.client)
 
@@ -53,4 +54,3 @@ export default class ReadyEvent extends BotEvent {
         this.client.logger.info(`${bold(this.client.user.username)} is ready!`)
     }
 }
-

@@ -14,7 +14,9 @@ export default class DeployCommand extends BotCommand {
 
     async execute(interaction: CommandInteraction): Promise<void> {
         // const ownerCommands = this.client.commands.filter((c) => c.options?.ownerOnly).map((c) => c.data.name)
-        const commands: ApplicationCommandData[] = this.client.commands.map((command: BotCommand): ApplicationCommandData => command.toJSON())
+        const commands: ApplicationCommandData[] = this.client.commands.map(
+            (command: BotCommand): ApplicationCommandData => command.toJSON()
+        )
 
         if (interaction.user.id !== this.client.ownerID)
             return void (await interaction.reply('This command is only available to the bot owner.'))

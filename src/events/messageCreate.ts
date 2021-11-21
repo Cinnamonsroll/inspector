@@ -14,7 +14,8 @@ export default class MessageCreateEvent extends BotEvent {
         const channel = message.channel as GuildTextBasedChannel
         const bot = await message.guild.members.fetch(this.client.user.id)
 
-        if (message.author?.bot || message.webhookId != undefined || !bot.permissionsIn(channel).has('MANAGE_MESSAGES')) return
+        if (message.author?.bot || message.webhookId != undefined || !bot.permissionsIn(channel).has('MANAGE_MESSAGES'))
+            return
 
         const guild = await this.client.database.guild.findFirst({ where: { id: channel.guild.id } })
 
@@ -29,8 +30,7 @@ export default class MessageCreateEvent extends BotEvent {
             const whitelist: string[] = guild.domain_whitelist
 
             // check if all links are in the whitelist
-            if (links.every((v: string): boolean => whitelist.includes(v)))
-                isWhiteListed = true
+            if (links.every((v: string): boolean => whitelist.includes(v))) isWhiteListed = true
         }
 
         if (isWhiteListed) return
@@ -50,11 +50,9 @@ export default class MessageCreateEvent extends BotEvent {
         data.matches.forEach((match: { type: string }): void => {
             const type: string = match.type.toLowerCase()
 
-            if ((type === 'phishing' || type === 'ip_logger') && !isMalicious)
-                isMalicious = true
+            if ((type === 'phishing' || type === 'ip_logger') && !isMalicious) isMalicious = true
         })
 
-        if (isMalicious)
-            await message.delete()
+        if (isMalicious) await message.delete()
     }
 }

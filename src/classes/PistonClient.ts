@@ -24,10 +24,11 @@ export class PistonClient {
         error?: boolean
     }> {
         const runtimes: Runtime[] = await cache(this.getRuntimes)
-        const runtime: Runtime = runtimes.find((r: Runtime): boolean => r.language === language || r.aliases.includes(language))
+        const runtime: Runtime = runtimes.find(
+            (r: Runtime): boolean => r.language === language || r.aliases.includes(language)
+        )
 
-        if (runtime === undefined)
-            throw new Error(`Language ${language} not found`)
+        if (runtime === undefined) throw new Error(`Language ${language} not found`)
 
         try {
             const { data } = (await axios.post(`https://emkc.org/api/v2/piston/execute`, {
@@ -37,8 +38,8 @@ export class PistonClient {
             })) as any
 
             return data.compile != undefined
-              ? { console: data.run.output, compiler: data.compile.output }
-              : { console: data.run.output }
+                ? { console: data.run.output, compiler: data.compile.output }
+                : { console: data.run.output }
         } catch (error) {
             // @ts-ignore
             if (error.isAxiosError) return { console: error.response.data.message, error: true }
