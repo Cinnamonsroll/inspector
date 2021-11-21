@@ -39,7 +39,7 @@ Make sure to replace the placeholders with their respective values.
 
 #### Supabase
 
-I recommend using [supabase](https://supabase.com] as you can get a free postgresql server there.
+I recommend using [supabase](https://supabase.com) as you can get a free postgresql server there.
 
 First signup / login on supabase and create a new project [here](https://app.supabase.io/new/legal-brown-partridge)
 
