@@ -1,13 +1,11 @@
 const cacheMap = new Map()
 
-export async function cache(func: any) {
-    const key = func.toString()
+export async function cache(func: Function): Promise<any> {
+    const key: string = func.toString()
 
-    if (cacheMap.has(key)) {
-        return cacheMap.get(key)
-    }
+    if (cacheMap.has(key)) return cacheMap.get(key)
 
-    const result = await func()
+    const result: any = await func()
 
     cacheMap.set(key, result)
 

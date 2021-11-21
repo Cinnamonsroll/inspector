@@ -1,6 +1,7 @@
-import { Interaction, GuildTextBasedChannel, PermissionString } from 'discord.js'
-import { BotClient, BotEvent } from '../classes/index'
+import { BotEvent } from '../classes/index'
 import { formatPermissions } from '../utils'
+import type { Interaction, GuildTextBasedChannel, PermissionString } from 'discord.js'
+import type { BotClient } from '../classes/index'
 
 export default class InteractionEvent extends BotEvent {
     constructor(client: BotClient) {
@@ -9,16 +10,13 @@ export default class InteractionEvent extends BotEvent {
         })
     }
 
-    async execute(interaction: Interaction) {
-        if (!interaction.isCommand()) return
-
-        if (!this.client.commands.has(interaction.commandName)) return
+    async execute(interaction: Interaction): Promise<void> {
+        if (!interaction.isCommand() || !this.client.commands.has(interaction.commandName)) return
 
         const command = this.client.commands.get(interaction.commandName)
 
-        if (command.options?.ownerOnly && interaction.user.id !== this.client.ownerID) {
-            return await interaction.reply('Only the bot owner can use this.')
-        }
+        if (command.options?.ownerOnly && interaction.user.id !== this.client.ownerID)
+            return void (await interaction.reply('Only the bot owner can use this.'))
 
         try {
             const channel = (await this.client.channels.fetch(interaction.channel.id)) as GuildTextBasedChannel
@@ -26,18 +24,14 @@ export default class InteractionEvent extends BotEvent {
             if (command.options?.clientPermissions) {
                 const bot = await channel.guild.members.fetch(this.client.user.id)
 
-                let missingPermissions: PermissionString[] = []
-
-                if (!interaction.channel.type.includes('THREAD')) {
-                    missingPermissions = channel.permissionsFor(bot).missing(command.options.clientPermissions)
-                } else {
-                    missingPermissions = bot.permissions.missing(command.options.clientPermissions)
-                }
+                const missingPermissions: PermissionString[] = !interaction.channel.type.includes('THREAD')
+                    ? channel.permissionsFor(bot.user.id).missing(command.options.clientPermissions)
+                    : bot.permissions.missing(command.options.clientPermissions)
 
                 if (missingPermissions && missingPermissions.length > 0) {
                     const permissions = formatPermissions(missingPermissions)
 
-                    return await interaction.reply({
+                    return void (await interaction.reply({
                         embeds: [
                             {
                                 title: 'Missing Permissions',
@@ -51,7 +45,7 @@ export default class InteractionEvent extends BotEvent {
                                 ]
                             }
                         ]
-                    })
+                    }))
                 }
             }
 
@@ -64,7 +58,7 @@ export default class InteractionEvent extends BotEvent {
                 if (missingPermissions && missingPermissions.length > 0) {
                     const permissions = formatPermissions(missingPermissions)
 
-                    return await interaction.reply({
+                    return void (await interaction.reply({
                         embeds: [
                             {
                                 title: 'Missing Permissions',
@@ -78,7 +72,7 @@ export default class InteractionEvent extends BotEvent {
                                 ]
                             }
                         ]
-                    })
+                    }))
                 }
             }
         } catch (error) {
@@ -92,12 +86,11 @@ export default class InteractionEvent extends BotEvent {
 
             this.client.logger.error(error)
 
-            if (interaction.user.id === this.client.ownerID) {
+            if (interaction.user.id === this.client.ownerID)
                 await interaction.reply({
                     content: `${error.name}: ${error.message} ${error.stack}`,
                     ephemeral: true
                 })
-            }
 
             await interaction.reply({
                 content: 'There was an error while executing this command!',
