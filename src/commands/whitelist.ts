@@ -56,7 +56,6 @@ export default class PingCommand extends BotCommand {
         const subcommand = interaction.options.getSubcommand()
         const link = interaction.options.getString('link')
 
-
         try {
             if (link) new URL(link)
         } catch (e) {
