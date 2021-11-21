@@ -10,7 +10,7 @@ interface Runtime {
 export class PistonClient {
     constructor() {}
 
-    async getRuntimes() {
+    async getRuntimes(): Promise<Runtime[]> {
         const { data } = await axios.get('https://emkc.org/api/v2/piston/runtimes')
         return data
     }
@@ -24,11 +24,10 @@ export class PistonClient {
         error?: boolean
     }> {
         const runtimes: Runtime[] = await cache(this.getRuntimes)
-        const runtime = runtimes.find((r) => r.language === language || r.aliases.includes(language))
+        const runtime: Runtime = runtimes.find((r: Runtime): boolean => r.language === language || r.aliases.includes(language))
 
-        if (!runtime) {
+        if (runtime === undefined)
             throw new Error(`Language ${language} not found`)
-        }
 
         try {
             const { data } = (await axios.post(`https://emkc.org/api/v2/piston/execute`, {
@@ -37,8 +36,9 @@ export class PistonClient {
                 files: [{ content: code }]
             })) as any
 
-            if (data.compile) return { console: data.run.output, compiler: data.compile.output }
-            else return { console: data.run.output }
+            return data.compile != undefined
+              ? { console: data.run.output, compiler: data.compile.output }
+              : { console: data.run.output }
         } catch (error) {
             // @ts-ignore
             if (error.isAxiosError) return { console: error.response.data.message, error: true }

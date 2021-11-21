@@ -1,5 +1,5 @@
-export function clean(text: string) {
-    if (typeof text === 'string')
-        return text.replace(/`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203))
-    else return text
+const cleanChar: string = String.fromCharCode(8203)
+
+export function clean(text: string): string {
+    return text.replaceAll('`', '`' + cleanChar).replaceAll('@', '@' + cleanChar)
 }

@@ -11,7 +11,7 @@ config({
     path: join(process.cwd(), '..', '.env')
 })
 
-const client = new BotClient(ClientOptions)
+const client: BotClient = new BotClient(ClientOptions)
 
 async function main() {
     client.ownerID = '476662199872651264'
@@ -40,7 +40,7 @@ async function main() {
     await commandHandler(client)
     await eventHandler(client)
 
-    process.on('uncaughtExceptionMonitor', (error: Error) => {
+    process.on('uncaughtExceptionMonitor', (error: Error): void => {
         client.logger.error(error)
     })
 

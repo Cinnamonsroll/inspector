@@ -1,6 +1,7 @@
 import axios from 'axios'
-import { GuildTextBasedChannel, Message } from 'discord.js'
-import { BotClient, BotEvent } from '../classes/index'
+import { BotEvent } from '../classes/index'
+import type { GuildTextBasedChannel, Message } from 'discord.js'
+import type { BotClient } from '../classes/index'
 
 export default class MessageUpdateEvent extends BotEvent {
     constructor(client: BotClient) {
@@ -9,30 +10,29 @@ export default class MessageUpdateEvent extends BotEvent {
         })
     }
 
-    async execute(messages: Message[]) {
+    async execute(messages: Message[]): Promise<void> {
         const [, message] = messages
 
         const channel = message.channel as GuildTextBasedChannel
         const bot = await message.guild.members.fetch(this.client.user.id)
 
-        if (message.author?.bot || message.webhookId || !bot.permissionsIn(channel).has('MANAGE_MESSAGES')) return
+        if (message.author?.bot || message.webhookId != undefined || !bot.permissionsIn(channel).has('MANAGE_MESSAGES')) return
 
         const guild = await this.client.database.guild.findFirst({ where: { id: channel.guild.id } })
 
-        let isMalicious = false
-        let isWhiteListed = false
+        let isMalicious: boolean = false
+        let isWhiteListed: boolean = false
 
-        if (guild) {
+        if (guild != undefined) {
             const links = message.content.match(
                 /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/
             )
 
-            const whitelist = guild.domain_whitelist
+            const whitelist: string[] = guild.domain_whitelist
 
             // check if all links are in the whitelist
-            if (links.every((v) => whitelist.includes(v))) {
+            if (links.every((v: string): boolean => whitelist.includes(v)))
                 isWhiteListed = true
-            }
         }
 
         if (isWhiteListed) return
@@ -49,16 +49,14 @@ export default class MessageUpdateEvent extends BotEvent {
             }
         )) as any
 
-        data.matches.forEach((match: { type: string }) => {
-            const type = match.type.toLowerCase()
+        data.matches.forEach((match: { type: string }): void => {
+            const type: string = match.type.toLowerCase()
 
-            if ((type === 'phishing' || type === 'ip_logger') && !isMalicious) {
+            if ((type === 'phishing' || type === 'ip_logger') && !isMalicious)
                 isMalicious = true
-            }
         })
 
-        if (isMalicious) {
-            message.delete()
-        }
+        if (isMalicious)
+            await message.delete()
     }
 }

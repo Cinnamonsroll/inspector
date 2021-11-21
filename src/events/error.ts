@@ -1,4 +1,5 @@
-import { BotClient, BotEvent } from '../classes/index'
+import { BotEvent } from '../classes/index'
+import type { BotClient } from '../classes/index'
 
 export default class ErrorEvent extends BotEvent {
     constructor(client: BotClient) {
@@ -7,8 +8,9 @@ export default class ErrorEvent extends BotEvent {
         })
     }
 
-    async execute(data: Error) {
+    async execute(data: Error): Promise<void> {
         if (data.message.includes('403')) return
-        else this.client.logger.error(data)
+
+        this.client.logger.error(data)
     }
 }

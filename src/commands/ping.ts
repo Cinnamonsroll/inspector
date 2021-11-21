@@ -1,5 +1,7 @@
-import { CommandInteraction, Permissions } from 'discord.js'
-import { BotClient, BotCommand } from '../classes/index'
+import { Permissions } from 'discord.js'
+import { BotCommand } from '../classes/index'
+import type { CommandInteraction } from 'discord.js'
+import type { BotClient } from '../classes/index'
 
 export default class PingCommand extends BotCommand {
     constructor(client: BotClient) {
@@ -13,7 +15,7 @@ export default class PingCommand extends BotCommand {
         }
     }
 
-    async execute(interaction: CommandInteraction) {
+    async execute(interaction: CommandInteraction): Promise<void> {
         await interaction.reply(`My ping is \`${this.client.ws.ping}ms\``)
     }
 }

@@ -1,5 +1,5 @@
-import { ApplicationCommandData, CommandInteraction } from 'discord.js'
-import { BotClient } from './index'
+import type { ApplicationCommandData, CommandInteraction } from 'discord.js'
+import type { BotClient } from './index'
 
 interface Options {
     ownerOnly?: boolean
@@ -12,11 +12,11 @@ export abstract class BotCommand {
 
     abstract execute(interaction: CommandInteraction): Promise<unknown>
 
-    toJSON() {
+    toJSON(): ApplicationCommandData {
         return this.data
     }
 
-    toString() {
+    toString(): string {
         return this.data.name
     }
 }
