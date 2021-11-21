@@ -119,8 +119,9 @@ Make a file in the root of the folder called `.env`
 and put something like this inside it
 
 ```env
-DISCORD_TOKEN="Your discord bot token here"
-DATABASE_URL="URL to your postgresql server"
+DISCORD_TOKEN="Your Discord Bot Token here"
+DATABASE_URL="URL to your PostgreSQL Server"
+OWNER_ID="Your Discord user ID"
 ```
 
 For replit you don't need to make a `.env` file, because you can just use the secrets panel on the left.
