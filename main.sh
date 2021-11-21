@@ -4,7 +4,6 @@
 
 echo "Installing latest nodejs version..."
 
-npm init -y 
 npm i --save-dev node@16 
 npm config set prefix=$(pwd)/node_modules/node 
 export PATH=$(pwd)/node_modules/node/bin:$PATH
@@ -14,6 +13,5 @@ echo "Starting..."
 npx prisma db pull 
 npx prisma generate 
 npx tsc 
-cd dist 
 clear 
-../node_modules/.bin/node index.js
+cd dist && ../node_modules/.bin/node index.js
