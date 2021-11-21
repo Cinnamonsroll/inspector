@@ -112,7 +112,9 @@ export default class PingCommand extends BotCommand {
                 }
 
                 if (invalidDomains.length > 0) {
-                    return await interaction.reply(`The following domains are not whitelisted: ${codeBlock(invalidDomains.join(', '))}`)
+                    return await interaction.reply(
+                        `The following domains are not whitelisted: ${codeBlock(invalidDomains.join(', '))}`
+                    )
                 }
 
                 await this.client.database.guild.update({
