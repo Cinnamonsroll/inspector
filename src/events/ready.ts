@@ -4,7 +4,7 @@ import { bold } from 'chalk'
 import { humanReadable } from '../utils/humanReadable'
 import type { BotClient } from '../classes/index'
 
-const testingGuild: string = '813808947164741670'
+const testingGuild: string = '911766580818497566'
 
 export default class ReadyEvent extends BotEvent {
     constructor(client: BotClient) {
@@ -14,12 +14,12 @@ export default class ReadyEvent extends BotEvent {
     }
 
     async execute(): Promise<void> {
-        // const ownerCommands = this.client.commands
-        //     .filter((command) => command.options?.ownerOnly)
-        //     .map((command) => command.toJSON())
+        const ownerCommands = this.client.commands
+            .filter((command) => command.options?.ownerOnly)
+            .map((command) => command.toJSON())
 
-        // const guild = await this.client.guilds.fetch(testingGuild)
-        // await guild.commands.set(ownerCommands)
+        const guild = await this.client.guilds.fetch(testingGuild)
+        await guild.commands.set(ownerCommands)
 
         await this.client.database.$connect()
         this.client.logger.info('Connected to database')

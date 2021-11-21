@@ -13,7 +13,7 @@ export default class DeployCommand extends BotCommand {
     }
 
     async execute(interaction: CommandInteraction): Promise<void> {
-        // const ownerCommands = this.client.commands.filter((c) => c.options?.ownerOnly).map((c) => c.data.name)
+        const ownerCommands = this.client.commands.filter((c) => c.options?.ownerOnly).map((c) => c.data.name)
         const commands: ApplicationCommandData[] = this.client.commands.map(
             (command: BotCommand): ApplicationCommandData => command.toJSON()
         )
@@ -23,15 +23,12 @@ export default class DeployCommand extends BotCommand {
 
         await interaction.deferReply({ ephemeral: true })
 
-        await this.client.application.commands.set([])
-        await interaction.guild.commands.set(commands)
-
-        // if (ownerCommands.length > 0) {
-        //     await this.client.application.commands.set(commands.filter((c) => !ownerCommands.includes(c.name)))
-        //     await interaction.guild.commands.set(commands.filter((c) => ownerCommands.includes(c.name)))
-        // } else {
-        //     await this.client.application.commands.set(commands)
-        // }
+        if (ownerCommands.length > 0) {
+            await this.client.application.commands.set(commands.filter((c) => !ownerCommands.includes(c.name)))
+            await interaction.guild.commands.set(commands.filter((c) => ownerCommands.includes(c.name)))
+        } else {
+            await this.client.application.commands.set(commands)
+        }
 
         await interaction.editReply('Slash commands have been updated globally.')
     }
