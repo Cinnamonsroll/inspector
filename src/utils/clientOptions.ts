@@ -1,4 +1,5 @@
-import { ClientOptions, Intents, Options } from 'discord.js'
+import { Intents, Options } from 'discord.js'
+import type { ClientOptions } from 'discord.js'
 
 const clientOptions: ClientOptions = {
     partials: ['CHANNEL', 'MESSAGE'],

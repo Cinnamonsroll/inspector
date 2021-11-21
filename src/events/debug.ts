@@ -1,4 +1,5 @@
-import { BotClient, BotEvent } from '../classes/index'
+import { BotEvent } from '../classes/index'
+import type { BotClient } from '../classes/index'
 
 export default class DebugEvent extends BotEvent {
     constructor(client: BotClient) {
@@ -7,7 +8,7 @@ export default class DebugEvent extends BotEvent {
         })
     }
 
-    async execute(data: string) {
+    async execute(data: string): Promise<void> {
         this.client.logger.debug(data)
     }
 }

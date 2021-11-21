@@ -1,9 +1,10 @@
-import { BotClient, BotEvent } from '../classes/index'
+import { BotEvent } from '../classes/index'
 import { AutoPoster } from 'topgg-autoposter'
 import { bold } from 'chalk'
 import { humanReadable } from '../utils/humanReadable'
+import type { BotClient } from '../classes/index'
 
-const testingGuild = '813808947164741670'
+const testingGuild: string = '813808947164741670'
 
 export default class ReadyEvent extends BotEvent {
     constructor(client: BotClient) {
@@ -12,7 +13,7 @@ export default class ReadyEvent extends BotEvent {
         })
     }
 
-    async execute() {
+    async execute(): Promise<void> {
         // const ownerCommands = this.client.commands
         //     .filter((command) => command.options?.ownerOnly)
         //     .map((command) => command.toJSON())
@@ -23,19 +24,19 @@ export default class ReadyEvent extends BotEvent {
         await this.client.database.$connect()
         this.client.logger.info('Connected to database')
 
-        if (!process.env.TOPGG_TOKEN) return this.client.logger.info(`${bold(this.client.user.username)} is ready!`)
+        if (!('TOPGG_TOKEN' in process.env)) return this.client.logger.info(`${bold(this.client.user.username)} is ready!`)
 
         const poster = AutoPoster(process.env.TOPGG_TOKEN, this.client)
 
-        poster.on('posted', async (stats) => {
+        poster.on('posted', async (stats): Promise<void> => {
             try {
                 stats.serverCount ||= 0
                 stats.shardCount ||= 0
 
-                const serverCount = humanReadable(stats.serverCount)
-                const shardCount = humanReadable(stats.shardCount)
+                const serverCount: string = humanReadable(stats.serverCount)
+                const shardCount: string = humanReadable(stats.shardCount)
 
-                const content = `In ${serverCount} servers! (${shardCount} shards)`
+                const content: string = `In ${serverCount} servers! (${shardCount} shards)`
 
                 this.client.user.setPresence({
                     status: 'online',
@@ -52,3 +53,4 @@ export default class ReadyEvent extends BotEvent {
         this.client.logger.info(`${bold(this.client.user.username)} is ready!`)
     }
 }
+
