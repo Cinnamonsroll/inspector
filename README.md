@@ -27,14 +27,15 @@ First signup / login on supabase and create a new project [here](https://app.sup
 
 Make sure to remember the password you enter for your database, because its gonna be required in the next steps. If you forget it you have to delete the project and create a ne one.
 
-After the project has been created and succesfully created, click on the Database Icon on the left. 
+After the project has been created and succesfully created, click on the Database Icon on the left.
 
-Now go to "Connection Pooling" under the "Settings" section and copy the connection string. 
+Now go to "Connection Pooling" under the "Settings" section and copy the connection string.
 
 Replace `[YOUR-PASSWORD]` in the connection string with the password you created for the Database when you created ur Project.
 Also replace `6543` Inside the connection string with `5432`
 
 Your result should look something like this:
+
 ```
 postgres://postgres:password123@db.project.supabase.co:5432/postgres
 ```
@@ -53,7 +54,7 @@ If you followed the step to get a supabase postgresql server, you should use tha
 
 ### Running
 
-First run this command to compile your code. 
+First run this command to compile your code.
 
 ```
 npm run build
