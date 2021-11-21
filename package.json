@@ -10,6 +10,12 @@
   },
   "keywords": [],
   "author": "Link#0069 https://github.com/link-discord",
+  "contributors": [
+    {
+      "name": "Voltrex",
+      "url": "https://github.com/VoltrexMaster"
+    }
+  ],
   "license": "GNU GPL v3",
   "dependencies": {
     "@prisma/client": "^3.5.0",
