@@ -31,6 +31,7 @@ Copyright © 2021 Link
 ```
 
 #### Plain Text
+
 ```
 This bot is a fork of Inspector (https://github.com/link-discord/inspector) and was made originally by Link (https://github.com/link-discord)
 
