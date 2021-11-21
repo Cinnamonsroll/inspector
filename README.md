@@ -141,7 +141,7 @@ npm run build
 npm run start
 ```
 
-## License
+# License
 
 This project is licensed under the [GNU General Public License v3.0](https://github.com/link-discord/inspector/blob/main/LICENSE).  
 For more information about conditions and other things, click on the link above.
