@@ -13,10 +13,13 @@ export default class MessageUpdateEvent extends BotEvent {
     async execute(messages: Message[]): Promise<void> {
         const [, message] = messages
 
-        const channel = message.channel as GuildTextBasedChannel
         const bot = await message.guild.members.fetch(this.client.user.id)
 
-        if (message.author?.bot || message.webhookId != undefined || !bot.permissionsIn(channel).has('MANAGE_MESSAGES'))
+        if (
+            message.author?.bot ||
+            message.webhookId != undefined ||
+            !bot.permissionsIn(message.channel as GuildTextBasedChannel).has('MANAGE_MESSAGES')
+        )
             return
 
         await inspect(this.client, message)
