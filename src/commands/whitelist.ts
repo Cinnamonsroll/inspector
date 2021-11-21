@@ -83,7 +83,7 @@ export default class WhitelistCommand extends BotCommand {
         } finally {
             if (subcommand === 'all') {
                 const domains = codeBlock(whitelist.map((d) => d.domain).join(', '))
-                
+
                 if (whitelist.length === 0) return interaction.reply('This guild has no whitelisted domains.')
                 else return interaction.reply(`Whitelisted domains: ${domains}`)
             } else if (subcommand === 'add') {
