@@ -141,6 +141,10 @@ npm run build
 npm run start
 ```
 
+## Replit
+
+<iframe frameborder="0" width="100%" height="500px" src="https://replit.com/@InspectorBot/inspector?embed=true"></iframe>
+
 # License
 
 This project is licensed under the [GNU General Public License v3.0](https://github.com/link-discord/inspector/blob/main/LICENSE).  
