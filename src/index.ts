@@ -14,7 +14,7 @@ config({
 const client: BotClient = new BotClient(ClientOptions)
 
 async function main() {
-    client.ownerID = '476662199872651264'
+    client.ownerID = process.env.OWNER ?? '476662199872651264'
     client.database = new PrismaClient()
     client.topgg = new Api(process.env.TOPGG_TOKEN)
     client.commands = new Collection()
