@@ -1,6 +1,7 @@
 # inspector
 
 [![DeepScan grade](https://deepscan.io/api/teams/16052/projects/19282/branches/495454/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=16052&pid=19282&bid=495454)
+[![Prettier](https://github.com/link-discord/inspector/actions/workflows/prettier.yml/badge.svg)](https://github.com/link-discord/inspector/actions/workflows/prettier.yml)
 
 The inspector discord bot
 
