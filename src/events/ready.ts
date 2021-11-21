@@ -4,7 +4,7 @@ import { bold } from 'chalk'
 import { humanReadable } from '../utils/humanReadable'
 import type { BotClient } from '../classes/index'
 
-const testingGuild: string = '911766580818497566'
+const testingGuild = '911766580818497566'
 
 export default class ReadyEvent extends BotEvent {
     constructor(client: BotClient) {
@@ -34,7 +34,7 @@ export default class ReadyEvent extends BotEvent {
                 const serverCount: string = humanReadable(stats.serverCount)
                 const shardCount: string = humanReadable(stats.shardCount)
 
-                const content: string = `In ${serverCount} servers! (${shardCount} shards)`
+                const content = `In ${serverCount} servers! (${shardCount} shards)`
 
                 this.client.user.setPresence({
                     status: 'online',
@@ -45,7 +45,9 @@ export default class ReadyEvent extends BotEvent {
                         }
                     ]
                 })
-            } catch (e) {}
+            } catch {
+                // Ignore the error
+            }
         })
 
         this.client.logger.info(`${bold(this.client.user.username)} is ready!`)

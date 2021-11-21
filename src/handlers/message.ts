@@ -7,8 +7,8 @@ export async function inspect(client: BotClient, message: Message) {
         where: { guild: { id: message.guildId } }
     })
 
-    let isMalicious: boolean = false
-    let isWhiteListed: boolean = false
+    let isMalicious = false
+    let isWhiteListed = false
 
     if (whitelist !== undefined && whitelist.length > 0) {
         const domains = message.content.match(
@@ -43,8 +43,7 @@ export async function inspect(client: BotClient, message: Message) {
         })
 
         if (isMalicious) await message.delete()
-    } catch (error) {
-        // @ts-ignore unknown type
-        if (!error.isAxiosError) this.client.logger.error(e)
+    } catch (error: any) {
+        if (!error.isAxiosError) client.logger.error(error)
     }
 }

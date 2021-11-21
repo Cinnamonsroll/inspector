@@ -8,7 +8,7 @@ export function humanReadable(
 ): string {
     const decimal: number = Math.pow(10, options.decimals)
 
-    let unit: number = 0
+    let unit = 0
 
     while (number >= 1000) {
         number /= 1000
