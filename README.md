@@ -43,7 +43,7 @@ I recommend using [supabase](https://supabase.com) as you can get a free postgre
 
 First signup / login on supabase and create a new project [here](https://app.supabase.io/new/legal-brown-partridge)
 
-Make sure to remember the password you enter for your database, because its gonna be required in the next steps. If you forget it you have to delete the project and create a ne one.
+Make sure to remember the password you enter for your database, because its gonna be required in the next steps. If you forget it you have to delete the project and create a new one.
 
 After the project has been created and successfully created, click on the Database Icon on the left.
 
