@@ -26,7 +26,7 @@ fi
 
 # Sync with database (Comment out the commands below if you haven't changed the prisma/schema.prisma file) 
 
-npx prisma db push
+npx prisma db push --skip-generate
 npx prisma db pull 
 npx prisma generate 
 
